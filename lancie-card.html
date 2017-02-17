@@ -1,11 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
-
-<!--
-`lancie-card`
-paper-card element specified for the lancie frontends
-
-@demo demo/index.html 
--->
+<link rel="import" href="../paper-card/paper-card.html">
 
 <dom-module id="lancie-card">
   <template>
@@ -13,22 +7,57 @@ paper-card element specified for the lancie frontends
       :host {
         display: block;
       }
+
+      paper-card {
+        display: block;
+        margin: 16px auto;
+        max-width: 500px;
+
+        --paper-card-header: {
+          background-color: #1a2b43;
+          display: flex;
+        }
+        --paper-card-header-image: {
+          margin: 16px;
+        }
+      }
+
+      .text {
+        --paper-card-header-color: white;
+        --paper-card-header-image: {
+          margin: 16px 16px 64px;
+        };
+        --paper-card-header-text: {
+          width: 100%;
+          padding: 16px 0;
+          text-align: center;
+        };
+      }
     </style>
-    <h2>Hello [[prop1]]</h2>
+
+    <paper-card heading="[[heading]]" class$="[[_hasHeading(heading)]]" image="[[image]]">
+      <content></content>
+    </paper-card>
   </template>
-
   <script>
+  (function() {
+    'use strict';
+
     Polymer({
-
       is: 'lancie-card',
-
       properties: {
-        prop1: {
+        heading: String,
+        image: {
           type: String,
-          value: 'lancie-card',
-        },
+          value: '../images-optimized/lancie/logo_without_date.png'
+        }
       },
 
+      _hasHeading: function(heading) {
+        this.async(this.updateStyles);
+        return !!heading ? 'text' : '';
+      },
     });
+  })();
   </script>
 </dom-module>
